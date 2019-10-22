@@ -1,51 +1,29 @@
 import axios from 'axios'
+import {format} from 'date-fns';
 
 //Define API request URL and request process
 
 const url = 'https://www.reddit.com/'
 const getSubRedditsAsync = async () => {
     const response = await axios.get(url + 'r/all/top.json?limit=' + 25);
+    //console.log(response.data.data.children);
 
-    console.log(response.data.data.children);
-    return response.data.data.children;
+    const lst = response.data.data.children.map(data => {
+        let date2 = format(data.data.created, 'yyyy-MM-dd');
+        data.data.created = diff_hours(new Date(), new Date(date2));
+        return data;
+    });
+    console.log(lst);
+    return lst;//response.data.data.children;
 };
+const diff_hours = (dt2, dt1) => {
 
+    var diff = (dt2.getTime() - dt1.getTime()) / 1000;
+    diff /= (60 * 60);
+    return Math.abs(Math.round(diff));
+
+};
 export default {
     getSubRedditsAsync,
-    getSubreddits: function (state, cb) {
-        // eg: https://www.reddit.com/r/all/top.json?limit=25
-        axios.get(url + 'r/all/top.json?limit=' + 25)
-            .then((res) => {
-                if (res.status >= 200 && res.status < 300) {
-                    cb(res.data.data.children)
-                }
-            })
-            .catch((error) => {
-                return Promise.reject(error)
-            })
-    },
-    getMoreSub: function (state, cb) {
-        // eg: https://www.reddit.com/r/all/top.json?limit=25&after=t3_60445l
-        axios.get(url + 'r/' + state.category + '/' + state.sortWay + '.json?limit=' + state.pageLimit + '&after=' + state.lastID)
-            .then((res) => {
-                if (res.status >= 200 && res.status < 300) {
-                    cb(res.data.data.children)
-                }
-            })
-            .catch((error) => {
-                return Promise.reject(error)
-            })
-    },
-    getPostDetail: function (state, cb) {
-        // eg: https://www.reddit.com/by_id/t3_15bfi0.json
-        axios.get(url + 'by_id/' + state.id + '.json')
-            .then((res) => {
-                if (res.status >= 200 && res.status < 300) {
-                    cb(res.data.children)
-                }
-            })
-            .catch((error) => {
-                return Promise.reject(error)
-            })
-    }
+
 }

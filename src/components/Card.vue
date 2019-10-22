@@ -3,6 +3,7 @@
         <div class="card-content">
             <div class="content">
                 <p class="title is-4">{{this.reddit.author}}</p>
+                {{this.reddit.created_utc}}
             </div>
             <div class="media">
                 <div class="media-left">
@@ -16,11 +17,9 @@
             </div>
 
             <div class="content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                <a href="#">#css</a> <a href="#">#responsive</a>
+                <a href="#">#css</a> <p>{{this.reddit.num_comments}} comments</p>
                 <br>
-                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                <time :datetime="new Date()">11:09 PM - 1 Jan 2016</time>
             </div>
         </div>
     </div>
