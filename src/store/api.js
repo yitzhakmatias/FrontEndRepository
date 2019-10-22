@@ -6,7 +6,7 @@ const url = 'https://www.reddit.com/'
 const getSubRedditsAsync = async () => {
     const response = await axios.get(url + 'r/all/top.json?limit=' + 25);
 
-    console.log(response.data.data.children[0].data.id);
+    console.log(response.data.data.children);
     return response.data.data.children;
 };
 
