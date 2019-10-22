@@ -1,33 +1,37 @@
 <template>
     <div class="columns">
         <div class="column is-3">
-            <header class="card-header">
-                <p class="card-header-title">heroes list</p>
-            </header>
-            <ul class="list is-hoverable">
-                <li v-for="reddit in CardList">
-                    <a class="list-item" @click="selectedHero=hero">
-                        <span>{{hero.firstName}}</span>
-                    </a>
-                </li>
+            <ul class="item-list">
+                <ul class="list is-hoverable">
+                    <li v-for="item in redditLst" :key="item">
+                        <a class="list-item" @click="selectedHero=item.data.id">
+                            <span>{{item.data.title}}</span>
+                        </a>
+                    </li>
+                </ul>
             </ul>
         </div>
     </div>
 </template>
 <script>
+    import api from '../store/api.js'
+
     export default {
         name: "CardList",
-        data() {
-            return {}
+
+        async created() {
+            await this.getRedditList();
         },
-        computed: {
-            ...mapGetters({
-                subreddits: 'getSubreddits',
-                categories: 'getCategories',
-                category: 'getCategory',
-                sortOption: 'getSortOption',
-                sortWay: 'getSort'
-            })
+        methods: {
+            async getRedditList() {
+                this.redditLst = [];
+                this.redditLst = await api.getSubRedditsAsync();
+            }
+        },
+        data() {
+            return {
+                redditLst: []
+            }
         }
     }
 </script>

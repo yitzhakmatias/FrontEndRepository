@@ -1,19 +1,16 @@
 <template>
     <div id="app">
-        <RedditList/>
         <CardList/>
     </div>
 </template>
 
 <script>
-    import RedditList from "./components/RedditList";
     import CardList from "./components/CardList";
 
     export default {
         name: 'app',
         components: {
-            CardList,
-            RedditList
+            CardList
         }
     }
 </script>

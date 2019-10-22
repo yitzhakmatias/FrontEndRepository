@@ -3,13 +3,20 @@ import axios from 'axios'
 //Define API request URL and request process
 
 const url = 'https://www.reddit.com/'
+const getSubRedditsAsync = async () => {
+    const response = await axios.get(url + 'r/all/top.json?limit=' + 25);
+
+    console.log(response.data.data.children[0].data.id);
+    return response.data.data.children;
+};
 
 export default {
+    getSubRedditsAsync,
     getSubreddits: function (state, cb) {
         // eg: https://www.reddit.com/r/all/top.json?limit=25
-        axios.get(url + 'r/' + state.category +'/'+ state.sortWay + '.json?limit=' + state.pageLimit)
+        axios.get(url + 'r/all/top.json?limit=' + 25)
             .then((res) => {
-                if(res.status >= 200 && res.status < 300) {
+                if (res.status >= 200 && res.status < 300) {
                     cb(res.data.data.children)
                 }
             })
@@ -19,9 +26,9 @@ export default {
     },
     getMoreSub: function (state, cb) {
         // eg: https://www.reddit.com/r/all/top.json?limit=25&after=t3_60445l
-        axios.get(url + 'r/' + state.category +'/'+ state.sortWay + '.json?limit=' + state.pageLimit + '&after=' + state.lastID)
+        axios.get(url + 'r/' + state.category + '/' + state.sortWay + '.json?limit=' + state.pageLimit + '&after=' + state.lastID)
             .then((res) => {
-                if(res.status >= 200 && res.status < 300) {
+                if (res.status >= 200 && res.status < 300) {
                     cb(res.data.data.children)
                 }
             })
@@ -33,7 +40,7 @@ export default {
         // eg: https://www.reddit.com/by_id/t3_15bfi0.json
         axios.get(url + 'by_id/' + state.id + '.json')
             .then((res) => {
-                if(res.status >= 200 && res.status < 300) {
+                if (res.status >= 200 && res.status < 300) {
                     cb(res.data.children)
                 }
             })
