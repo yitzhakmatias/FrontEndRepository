@@ -1,6 +1,6 @@
 <template>
     <div class="columns">
-        <div class="column is-3">
+        <div class="column is-3 is-narrow">
             <div class=" column is-3 header">
                 <h2 class="title">Reddit posts</h2>
             </div>
@@ -9,9 +9,9 @@
                     <ul class="list is-hoverable">
 
                         <li v-for="item in redditLst" :key="item.data.id">
-                            <a class="list-item" @click="setReddit(item.data)">
-                                <card :reddit="item.data"/>
-                            </a>
+                            <div class="list-item">
+                                <card :reddit="item.data" v-on:dismissRow="removeItem" v-on:selectRow="setReddit"/>
+                            </div>
 
                         </li>
 
@@ -20,7 +20,9 @@
             </div>
 
             <div class=" column is-3 foot">
-              <h2>Dismiss All</h2>
+                <a v-on:click="dismissAll">
+                    <h2 class="subtitle">Dismiss All</h2>
+                </a>
             </div>
         </div>
         <div class="column is-8 mainContent">
@@ -51,11 +53,18 @@
                 this.redditLst = await api.getSubRedditsAsync();
             },
             setReddit(reddit) {
-                //console.log(reddit);
+
                 this.selectedReddit = reddit;
             },
             loadMore() {
                 this.numElements += 50;
+            },
+            removeItem(event) {
+
+                this.redditLst = this.redditLst.filter(x => x.data.id !== event);
+            },
+            dismissAll() {
+                this.redditLst = [];
             }
         },
         data() {
@@ -91,7 +100,8 @@
     .sideDiv {
         margin-top: 62px;
     }
-    .mainContent{
+
+    .mainContent {
         margin-top: 62px;
         position: fixed;
         left: 25%;
