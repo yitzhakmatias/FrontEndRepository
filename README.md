@@ -2,6 +2,10 @@
 
 Vue js and Reddit 
 
+# DEMO
+
+https://front-end-vue-app.herokuapp.com/
+
 ## Project setup
 ```
 yarn install
