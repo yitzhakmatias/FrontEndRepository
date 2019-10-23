@@ -5,7 +5,7 @@ import {format} from 'date-fns';
 
 const url = 'https://www.reddit.com/'
 const getSubRedditsAsync = async () => {
-    const response = await axios.get(url + 'r/all/top.json?limit=' + 25);
+    const response = await axios.get(url + 'r/all/top.json?limit=' + 50);
     const lst = response.data.data.children.map(data => {
         let date2 = format(data.data.created, 'yyyy-MM-dd');
         data.data.created = diff_hours(new Date(), new Date(date2));
