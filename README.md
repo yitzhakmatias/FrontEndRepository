@@ -2,9 +2,9 @@
 
 Vue js and Reddit 
 
-# DEMO
+# [DEMO](https://front-end-vue-app.herokuapp.com/)
 
-https://front-end-vue-app.herokuapp.com/
+
 
 ## Project setup
 ```
