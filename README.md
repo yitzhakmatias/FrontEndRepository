@@ -1,4 +1,6 @@
-# front-end-test
+# front-end 
+
+Vue js and Reddit 
 
 ## Project setup
 ```
